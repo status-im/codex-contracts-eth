@@ -8,17 +8,17 @@ struct Request {
   address client;
   Ask ask;
   Content content;
-  uint256 expiry; // amount of seconds since start of the request at which this request expires
+  uint64 expiry; // amount of seconds since start of the request at which this request expires
   bytes32 nonce; // random nonce to differentiate between similar requests
 }
 
 struct Ask {
-  uint64 slots; // the number of requested slots
-  uint256 slotSize; // amount of storage per slot (in number of bytes)
-  uint256 duration; // how long content should be stored (in seconds)
   uint256 proofProbability; // how often storage proofs are required
   uint256 reward; // amount of tokens paid per second per slot to hosts
   uint256 collateral; // amount of tokens required to be deposited by the hosts in order to fill the slot
+  uint64 slots; // the number of requested slots
+  uint64 slotSize; // amount of storage per slot (in number of bytes)
+  uint64 duration; // how long content should be stored (in seconds)
   uint64 maxSlotLoss; // Max slots that can be lost without data considered to be lost
 }
 
