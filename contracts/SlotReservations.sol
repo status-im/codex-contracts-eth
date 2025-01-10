@@ -18,7 +18,7 @@ abstract contract SlotReservations {
 
   function _slotIsFree(SlotId slotId) internal view virtual returns (bool);
 
-  function reserveSlot(RequestId requestId, uint256 slotIndex) public {
+  function reserveSlot(RequestId requestId, uint64 slotIndex) public {
     if (!canReserveSlot(requestId, slotIndex))
       revert SlotReservations_ReservationNotAllowed();
 
@@ -32,7 +32,7 @@ abstract contract SlotReservations {
 
   function canReserveSlot(
     RequestId requestId,
-    uint256 slotIndex
+    uint64 slotIndex
   ) public view returns (bool) {
     address host = msg.sender;
     SlotId slotId = Requests.slotId(requestId, slotIndex);
@@ -43,5 +43,5 @@ abstract contract SlotReservations {
       (!_reservations[slotId].contains(host));
   }
 
-  event SlotReservationsFull(RequestId indexed requestId, uint256 slotIndex);
+  event SlotReservationsFull(RequestId indexed requestId, uint64 slotIndex);
 }

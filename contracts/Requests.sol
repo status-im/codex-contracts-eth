@@ -52,7 +52,7 @@ library Requests {
 
   function slotId(
     RequestId requestId,
-    uint256 slotIndex
+    uint64 slotIndex
   ) internal pure returns (SlotId) {
     return SlotId.wrap(keccak256(abi.encode(requestId, slotIndex)));
   }
