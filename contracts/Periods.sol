@@ -4,34 +4,34 @@ pragma solidity 0.8.23;
 contract Periods {
   error Periods_InvalidSecondsPerPeriod();
 
-  type Period is uint256;
+  type Period is uint64;
 
-  uint256 internal immutable _secondsPerPeriod;
+  uint64 internal immutable _secondsPerPeriod;
 
-  constructor(uint256 secondsPerPeriod) {
+  constructor(uint64 secondsPerPeriod) {
     if (secondsPerPeriod == 0) {
       revert Periods_InvalidSecondsPerPeriod();
     }
     _secondsPerPeriod = secondsPerPeriod;
   }
 
-  function _periodOf(uint256 timestamp) internal view returns (Period) {
+  function _periodOf(uint64 timestamp) internal view returns (Period) {
     return Period.wrap(timestamp / _secondsPerPeriod);
   }
 
   function _blockPeriod() internal view returns (Period) {
-    return _periodOf(block.timestamp);
+    return _periodOf(uint64(block.timestamp));
   }
 
   function _nextPeriod(Period period) internal pure returns (Period) {
     return Period.wrap(Period.unwrap(period) + 1);
   }
 
-  function _periodStart(Period period) internal view returns (uint256) {
+  function _periodStart(Period period) internal view returns (uint64) {
     return Period.unwrap(period) * _secondsPerPeriod;
   }
 
-  function _periodEnd(Period period) internal view returns (uint256) {
+  function _periodEnd(Period period) internal view returns (uint64) {
     return _periodStart(_nextPeriod(period));
   }
 
