@@ -5,8 +5,8 @@ using ERC20A as Token;
 methods {
     function Token.balanceOf(address) external returns (uint256) envfree;
     function Token.totalSupply() external returns (uint256) envfree;
-    function publicPeriodEnd(Periods.Period) external returns (uint256) envfree;
-    function generateSlotId(Marketplace.RequestId, uint256) external returns (Marketplace.SlotId) envfree;
+    function publicPeriodEnd(Periods.Period) external returns (uint64) envfree;
+    function generateSlotId(Marketplace.RequestId, uint64) external returns (Marketplace.SlotId) envfree;
 }
 
 /*--------------------------------------------

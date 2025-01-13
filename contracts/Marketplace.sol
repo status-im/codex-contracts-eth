@@ -159,7 +159,9 @@ contract Marketplace is SlotReservations, Proofs, StateRetrieval, Endian {
     }
 
     _requests[id] = request;
-    _requestContexts[id].endsAt = uint64(block.timestamp) + request.ask.duration;
+    _requestContexts[id].endsAt =
+      uint64(block.timestamp) +
+      request.ask.duration;
     _requestContexts[id].expiresAt = uint64(block.timestamp) + request.expiry;
 
     _addToMyRequests(request.client, id);
@@ -617,7 +619,8 @@ contract Marketplace is SlotReservations, Proofs, StateRetrieval, Endian {
       return RequestState.Cancelled;
     } else if (
       (context.state == RequestState.Started ||
-        context.state == RequestState.New) && uint64(block.timestamp) > context.endsAt
+        context.state == RequestState.New) &&
+      uint64(block.timestamp) > context.endsAt
     ) {
       return RequestState.Finished;
     } else {
