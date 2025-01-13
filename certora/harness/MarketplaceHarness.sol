@@ -14,7 +14,7 @@ contract MarketplaceHarness is Marketplace {
         Marketplace(config, token, verifier)
     {}
 
-    function publicPeriodEnd(Period period) public view returns (uint256) {
+    function publicPeriodEnd(Period period) public view returns (uint64) {
         return _periodEnd(period);
     }
 
