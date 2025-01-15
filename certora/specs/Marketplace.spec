@@ -79,11 +79,11 @@ hook Sstore _missing[KEY MarketplaceHarness.SlotId slotId][KEY Periods.Period pe
     }
 }
 
-hook Sload uint256 defaultValue _missed[KEY MarketplaceHarness.SlotId slotId] {
+hook Sload uint64 defaultValue _missed[KEY MarketplaceHarness.SlotId slotId] {
     require _missedMirror[slotId] == defaultValue;
 }
 
-hook Sstore _missed[KEY MarketplaceHarness.SlotId slotId] uint256 defaultValue {
+hook Sstore _missed[KEY MarketplaceHarness.SlotId slotId] uint64 defaultValue {
     _missedMirror[slotId] = defaultValue;
     if (defaultValue == 0) {
         _missedCalculated[slotId] = 0;
@@ -116,17 +116,17 @@ hook Sload uint256 defaultValue _requestContexts[KEY MarketplaceHarness.RequestI
     require slotsFilledGhost[RequestId] == defaultValue;
 }
 
-hook Sstore _requestContexts[KEY MarketplaceHarness.RequestId RequestId].slotsFilled uint256 defaultValue {
+hook Sstore _requestContexts[KEY MarketplaceHarness.RequestId RequestId].slotsFilled uint64 defaultValue {
     slotsFilledGhost[RequestId] = defaultValue;
 }
 
 ghost mapping(MarketplaceHarness.RequestId => uint256) endsAtGhost;
 
-hook Sload uint256 defaultValue _requestContexts[KEY MarketplaceHarness.RequestId RequestId].endsAt {
+hook Sload uint64 defaultValue _requestContexts[KEY MarketplaceHarness.RequestId RequestId].endsAt {
     require endsAtGhost[RequestId] == defaultValue;
 }
 
-hook Sstore _requestContexts[KEY MarketplaceHarness.RequestId RequestId].endsAt uint256 defaultValue {
+hook Sstore _requestContexts[KEY MarketplaceHarness.RequestId RequestId].endsAt uint64 defaultValue {
     endsAtGhost[RequestId] = defaultValue;
 }
 
@@ -139,7 +139,7 @@ function canCancelRequest(method f) returns bool {
 }
 
 function canStartRequest(method f) returns bool {
-    return f.selector == sig:fillSlot(Marketplace.RequestId, uint256, Marketplace.Groth16Proof).selector;
+    return f.selector == sig:fillSlot(Marketplace.RequestId, uint64, Marketplace.Groth16Proof).selector;
 }
 
 function canFinishRequest(method f) returns bool {
@@ -159,7 +159,7 @@ function canMakeSlotPaid(method f) returns bool {
 }
 
 function canFillSlot(method f) returns bool {
-    return f.selector == sig:fillSlot(Marketplace.RequestId, uint256, Marketplace.Groth16Proof).selector;
+    return f.selector == sig:fillSlot(Marketplace.RequestId, uint64, Marketplace.Groth16Proof).selector;
 }
 
 // The slot identified by `slotId` must have requestId and slotIndex set to 0,
