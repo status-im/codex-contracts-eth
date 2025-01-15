@@ -58,7 +58,7 @@ ghost mapping(MarketplaceHarness.SlotId => mapping(Periods.Period => bool)) _mis
             _missingMirror[a][b] == false;
 }
 
-ghost mapping(MarketplaceHarness.SlotId => uint256) _missedMirror {
+ghost mapping(MarketplaceHarness.SlotId => uint64) _missedMirror {
     init_state axiom forall MarketplaceHarness.SlotId a.
             _missedMirror[a] == 0;
 }
@@ -110,9 +110,9 @@ hook Sstore _slots[KEY Marketplace.SlotId slotId].state Marketplace.SlotState ne
     }
 }
 
-ghost mapping(MarketplaceHarness.RequestId => uint256) slotsFilledGhost;
+ghost mapping(MarketplaceHarness.RequestId => uint64) slotsFilledGhost;
 
-hook Sload uint256 defaultValue _requestContexts[KEY MarketplaceHarness.RequestId RequestId].slotsFilled {
+hook Sload uint64 defaultValue _requestContexts[KEY MarketplaceHarness.RequestId RequestId].slotsFilled {
     require slotsFilledGhost[RequestId] == defaultValue;
 }
 
@@ -120,7 +120,7 @@ hook Sstore _requestContexts[KEY MarketplaceHarness.RequestId RequestId].slotsFi
     slotsFilledGhost[RequestId] = defaultValue;
 }
 
-ghost mapping(MarketplaceHarness.RequestId => uint256) endsAtGhost;
+ghost mapping(MarketplaceHarness.RequestId => uint64) endsAtGhost;
 
 hook Sload uint64 defaultValue _requestContexts[KEY MarketplaceHarness.RequestId RequestId].endsAt {
     require endsAtGhost[RequestId] == defaultValue;
