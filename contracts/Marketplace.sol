@@ -557,13 +557,13 @@ contract Marketplace is SlotReservations, Proofs, StateRetrieval, Endian {
     return _slots[slotId].state == SlotState.Free;
   }
 
-  function requestEnd(RequestId requestId) public view returns (uint256) {
-    uint256 end = _requestContexts[requestId].endsAt;
+  function requestEnd(RequestId requestId) public view returns (uint64) {
+    uint64 end = _requestContexts[requestId].endsAt;
     RequestState state = requestState(requestId);
     if (state == RequestState.New || state == RequestState.Started) {
       return end;
     } else {
-      return Math.min(end, uint64(block.timestamp) - 1);
+      return uint64(Math.min(end, block.timestamp - 1));
     }
   }
 
@@ -580,7 +580,7 @@ contract Marketplace is SlotReservations, Proofs, StateRetrieval, Endian {
    */
   function _slotPayout(
     RequestId requestId,
-    uint256 startingTimestamp
+    uint64 startingTimestamp
   ) private view returns (uint256) {
     return
       _slotPayout(
@@ -593,8 +593,8 @@ contract Marketplace is SlotReservations, Proofs, StateRetrieval, Endian {
   /// @notice Calculates the amount that should be paid out to a host based on the specified time frame.
   function _slotPayout(
     RequestId requestId,
-    uint256 startingTimestamp,
-    uint256 endingTimestamp
+    uint64 startingTimestamp,
+    uint64 endingTimestamp
   ) private view returns (uint256) {
     Request storage request = _requests[requestId];
     if (startingTimestamp >= endingTimestamp)
