@@ -48,8 +48,8 @@ hook Sstore currentContract._marketplaceTotals.sent uint256 defaultValue (uint25
 ghost uint64 lastBlockTimestampGhost;
 
 hook TIMESTAMP uint v {
-    require lastBlockTimestampGhost <= to_uint64(v);
-    lastBlockTimestampGhost = to_uint64(v);
+    require lastBlockTimestampGhost <= uint64(v);
+    lastBlockTimestampGhost = uint64(v);
 }
 
 ghost mapping(MarketplaceHarness.SlotId => mapping(Periods.Period => bool)) _missingMirror {
