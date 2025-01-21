@@ -2,21 +2,21 @@ const { ethers } = require("hardhat")
 const { keccak256, defaultAbiCoder } = ethers.utils
 
 function requestId(request) {
-  const Ask = "tuple(int64, uint256, uint256, uint256, uint256, uint256, int64)"
+  const Ask = "tuple(uint256, uint256, uint256, uint64, uint64, uint64, int64)"
   const Content = "tuple(string, bytes32)"
   const Request =
-    "tuple(address, " + Ask + ", " + Content + ", uint256, bytes32)"
+    "tuple(address, " + Ask + ", " + Content + ", uint64, bytes32)"
   return keccak256(defaultAbiCoder.encode([Request], requestToArray(request)))
 }
 
 function askToArray(ask) {
   return [
-    ask.slots,
-    ask.slotSize,
-    ask.duration,
     ask.proofProbability,
     ask.reward,
     ask.collateral,
+    ask.slots,
+    ask.slotSize,
+    ask.duration,
     ask.maxSlotLoss,
   ]
 }

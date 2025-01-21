@@ -14,7 +14,7 @@ contract MarketplaceHarness is Marketplace {
         Marketplace(config, token, verifier)
     {}
 
-    function publicPeriodEnd(Period period) public view returns (uint256) {
+    function publicPeriodEnd(Period period) public view returns (uint64) {
         return _periodEnd(period);
     }
 
@@ -22,7 +22,7 @@ contract MarketplaceHarness is Marketplace {
         return _slots[slotId];
     }
 
-    function generateSlotId(RequestId requestId, uint256 slotIndex) public pure returns (SlotId) {
+    function generateSlotId(RequestId requestId, uint64 slotIndex) public pure returns (SlotId) {
         return Requests.slotId(requestId, slotIndex);
     }
 }
